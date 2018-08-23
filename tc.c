@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
     int  sock;                   // Socket 
     int  resultado;              // Resultado das funcoes
     char mensagem[TAM_MENSAGEM]; // Buffer para a recepcao string de echo
-    int  valor;
+    int  valor,sete=0, par=0, impar=0, flag=0;
     char IP[] = "0.0.0.0";       // EnderecIP do servidor
 
     FILE *arq;
@@ -175,13 +175,42 @@ int main(int argc, char *argv[])
     while (fscanf(arq,"%s",mensagem) == 1)
     {
          
+         sete=par=impar=flag=0;
+
          valor = atoi(mensagem);
-         if ((valor%7) == 0)
+
+//ANALISA VALOR LIDO  DE ENTRADA E DEFINE O TIPO
+         sete   = !(valor%7);
+         par    = !(valor%2)*3;
+         impar  = (!par)*5;
+         
+         flag = sete + par + impar;  
+         
+         switch (flag)
+         {
+            case 4: 
+         	 mensagem[5]='A';         
+                 break;
+            case 3: 
+         	 mensagem[5]='B';         
+                 break;
+            case 6: ;
+         	 mensagem[5]='C';         
+                 break;
+            case 5: 
+         	 mensagem[5]='D';         
+                 break;
+            default: 
+         	 mensagem[5]='U';         
+
+         }
+
+/*         if ((valor%7) == 0)
 	    mensagem[5] = 'S';
          else if ((valor%2) == 0)
   	      mensagem[5] = 'P';
          else
-  	      mensagem[5] = 'I';
+  	      mensagem[5] = 'I';*/
 
          sock = criar_socket(0);
 

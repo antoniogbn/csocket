@@ -167,12 +167,24 @@ int main()
         /* Recebe a mensagem do cliente */
         resultado = receber_mensagem(mensagem,socket_cliente);
 //      printf("\n%s",mensagem);
-        if (mensagem[5]=='S')
+
+        if (mensagem[5]=='A')
+        {
            fprintf(arqS,"%.5s\n",mensagem);
-	else if (mensagem[5]=='P')
            fprintf(arqP,"%.5s\n",mensagem);
-	else 
+        }
+	else if (mensagem[5]=='B')
+           fprintf(arqP,"%.5s\n",mensagem);
+	else if (mensagem[5]=='C')
+	{
+           fprintf(arqS,"%.5s\n",mensagem);
            fprintf(arqI,"%.5s\n",mensagem);
+        }
+	else if (mensagem[5]=='D')
+           fprintf(arqI,"%.5s\n",mensagem);
+	else 
+	   printf("\nErro : Mensagem Indefinida >> %s",mensagem);	
+
 
         if (resultado < 0)
         {
