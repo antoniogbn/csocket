@@ -166,7 +166,11 @@ int main()
 
         /* Recebe a mensagem do cliente */
         resultado = receber_mensagem(mensagem,socket_cliente);
-//      printf("\n%s",mensagem);
+        if (resultado < 0)
+        {
+            printf("\nErro no recebimento da mensagem\n");
+            return(1);
+        }
 
         if (mensagem[5]=='A')
         {
@@ -174,7 +178,9 @@ int main()
            fprintf(arqP,"%.5s\n",mensagem);
         }
 	else if (mensagem[5]=='B')
+	{
            fprintf(arqP,"%.5s\n",mensagem);
+	}
 	else if (mensagem[5]=='C')
 	{
            fprintf(arqS,"%.5s\n",mensagem);
@@ -183,15 +189,13 @@ int main()
 	else if (mensagem[5]=='D')
            fprintf(arqI,"%.5s\n",mensagem);
 	else 
+	{   
 	   printf("\nErro : Mensagem Indefinida >> %s",mensagem);	
+           mensagem[5]='U';
+	}
 
-
-        if (resultado < 0)
-        {
-            printf("\nErro no recebimento da mensagem\n");
-            return(1);
-        }
-
+	if (mensagem[5] != 'U') mensagem[5]='O';
+	   
         /* Devolve o conteúdo da mensagem para o cliente */
         resultado = enviar_mensagem(mensagem,socket_cliente);
         if (resultado < 0)

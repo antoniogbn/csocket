@@ -190,6 +190,7 @@ int main(int argc, char *argv[])
          {
             case 4: 
          	 mensagem[5]='A';         
+         	 //mensagem[5]='X';  // Teste para falha da mensagem       
                  break;
             case 3: 
          	 mensagem[5]='B';         
@@ -204,13 +205,6 @@ int main(int argc, char *argv[])
          	 mensagem[5]='U';         
 
          }
-
-/*         if ((valor%7) == 0)
-	    mensagem[5] = 'S';
-         else if ((valor%2) == 0)
-  	      mensagem[5] = 'P';
-         else
-  	      mensagem[5] = 'I';*/
 
          sock = criar_socket(0);
 
@@ -228,7 +222,6 @@ int main(int argc, char *argv[])
          }
 
          resultado = enviar_mensagem(mensagem,sock);
-//       printf("%s\n", mensagem);
 
          if (resultado < 0)
             printf("\nErro no envio da mensagem\n");
@@ -237,6 +230,12 @@ int main(int argc, char *argv[])
          resultado = receber_mensagem(mensagem,sock);
          if (resultado < 0)
             printf("\nErro no recebimento da mensagem\n");
+
+	 if (mensagem[5]=='O') 
+	    printf(" >> Mensagem recebida e salva pelo servidor !\n\n");
+	 else if (mensagem[5]=='U') 
+	    printf(" >> ERRO : Mensagem nao reconhecida pelo servidor !\n\n");
+
 
          close(sock);
          m_usleep(TEMPO_SLEEP);
